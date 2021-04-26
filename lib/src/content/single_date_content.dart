@@ -1,6 +1,7 @@
 import 'package:black_hole_flutter/black_hole_flutter.dart';
 import 'package:flutter/widgets.dart';
 import 'package:time_machine/time_machine.dart';
+import 'package:timetable/src/content/multi_hour_background_painter.dart';
 
 import '../controller.dart';
 import '../date_page_view.dart';
@@ -18,6 +19,7 @@ class SingleDateContent<E extends Event> extends StatefulWidget {
     @required this.controller,
     @required this.eventBuilder,
     this.onEventBackgroundTap,
+    this.showHourPainterOnly = false
   })  : assert(controller != null),
         assert(eventBuilder != null),
         super(key: key);
@@ -25,6 +27,7 @@ class SingleDateContent<E extends Event> extends StatefulWidget {
   final TimetableController<E> controller;
   final EventBuilder<E> eventBuilder;
   final OnEventBackgroundTapCallback onEventBackgroundTap;
+  final bool showHourPainterOnly;
 
   @override
   _SingleDateContentState<E> createState() => _SingleDateContentState<E>();
@@ -46,10 +49,15 @@ class _SingleDateContentState<E extends Event>
     final theme = context.theme;
     final timetableTheme = context.timetableTheme;
     return CustomPaint(
-      painter: MultiDateBackgroundPainter(
-        controller: widget.controller,
-        dividerColor: timetableTheme?.dividerColor ?? theme.dividerColor,
-      ),
+        painter: widget.showHourPainterOnly
+            ? MultiHourBackgroundPainter(
+          controller: widget.controller,
+          dividerColor: timetableTheme?.dividerColor ?? theme.dividerColor,
+        )
+            : MultiDateBackgroundPainter(
+          controller: widget.controller,
+          dividerColor: timetableTheme?.dividerColor ?? theme.dividerColor,
+        ),
       foregroundPainter: CurrentTimeIndicatorPainter(
         controller: widget.controller,
         color: timetableTheme?.timeIndicatorColor ??

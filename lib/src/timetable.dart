@@ -44,7 +44,8 @@ class Timetable<E extends Event> extends StatelessWidget {
     this.theme,
     this.dateHeaderBuilder,
     this.leadingHeaderBuilder,
-    this.singleDate = false
+    this.singleDate = false,
+    this.showHourPainterOnly = false,
   })  : assert(controller != null),
         assert(eventBuilder != null),
         super(key: key);
@@ -77,6 +78,9 @@ class Timetable<E extends Event> extends StatelessWidget {
   ///Set to true to disable swiping to change to dates in visible range.
   final bool singleDate;
 
+  ///Set to true to show horizontal hour dividers only.
+  final bool showHourPainterOnly;
+
   @override
   Widget build(BuildContext context) {
     Widget child = Column(
@@ -95,6 +99,7 @@ class Timetable<E extends Event> extends StatelessWidget {
             eventBuilder: eventBuilder,
             onEventBackgroundTap: onEventBackgroundTap,
             singleDate: singleDate,
+            showHourPainterOnly: showHourPainterOnly,
           ),
         ),
       ],

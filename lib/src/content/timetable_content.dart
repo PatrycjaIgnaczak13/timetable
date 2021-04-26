@@ -17,7 +17,8 @@ class TimetableContent<E extends Event> extends StatelessWidget {
     @required this.controller,
     @required this.eventBuilder,
     this.onEventBackgroundTap,
-    this.singleDate = false
+    this.singleDate = false,
+    this.showHourPainterOnly = false,
   })  : assert(controller != null),
         assert(eventBuilder != null),
         super(key: key);
@@ -26,6 +27,7 @@ class TimetableContent<E extends Event> extends StatelessWidget {
   final EventBuilder<E> eventBuilder;
   final OnEventBackgroundTapCallback onEventBackgroundTap;
   final bool singleDate;
+  final bool showHourPainterOnly;
 
   @override
   Widget build(BuildContext context) {
@@ -59,10 +61,12 @@ class TimetableContent<E extends Event> extends StatelessWidget {
               controller: controller,
               eventBuilder: eventBuilder,
               onEventBackgroundTap: onEventBackgroundTap,
+              showHourPainterOnly: showHourPainterOnly,
             ) : MultiDateContent<E>(
               controller: controller,
               eventBuilder: eventBuilder,
               onEventBackgroundTap: onEventBackgroundTap,
+              showHourPainterOnly: showHourPainterOnly,
             ),
           ),
         ],

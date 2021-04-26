@@ -10,6 +10,7 @@ import '../timetable.dart';
 import '../utils/stream_change_notifier.dart';
 import 'current_time_indicator_painter.dart';
 import 'multi_date_background_painter.dart';
+import 'multi_hour_background_painter.dart';
 import 'streamed_date_events.dart';
 
 class MultiDateContent<E extends Event> extends StatefulWidget {
@@ -18,6 +19,7 @@ class MultiDateContent<E extends Event> extends StatefulWidget {
     @required this.controller,
     @required this.eventBuilder,
     this.onEventBackgroundTap,
+    this.showHourPainterOnly = false,
   })  : assert(controller != null),
         assert(eventBuilder != null),
         super(key: key);
@@ -25,6 +27,7 @@ class MultiDateContent<E extends Event> extends StatefulWidget {
   final TimetableController<E> controller;
   final EventBuilder<E> eventBuilder;
   final OnEventBackgroundTapCallback onEventBackgroundTap;
+  final bool showHourPainterOnly;
 
   @override
   _MultiDateContentState<E> createState() => _MultiDateContentState<E>();
@@ -46,7 +49,12 @@ class _MultiDateContentState<E extends Event>
     final theme = context.theme;
     final timetableTheme = context.timetableTheme;
     return CustomPaint(
-      painter: MultiDateBackgroundPainter(
+      painter: widget.showHourPainterOnly
+          ? MultiHourBackgroundPainter(
+        controller: widget.controller,
+        dividerColor: timetableTheme?.dividerColor ?? theme.dividerColor,
+      )
+          : MultiDateBackgroundPainter(
         controller: widget.controller,
         dividerColor: timetableTheme?.dividerColor ?? theme.dividerColor,
       ),
