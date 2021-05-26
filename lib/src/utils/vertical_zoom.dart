@@ -126,8 +126,7 @@ class _VerticalZoomState extends State<VerticalZoom> {
           onScaleUpdate: (details) =>
               _onZoomUpdate(height, details, timetableTheme),
           child: SingleChildScrollView(
-            // We handle scrolling manually to improve zoom detection.
-            physics: NeverScrollableScrollPhysics(),
+            physics: ClampingScrollPhysics(),
             controller: _scrollController,
             child: SizedBox(
               height: _contentHeight,
